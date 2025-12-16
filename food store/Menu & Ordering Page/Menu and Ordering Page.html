@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Urban Crave Restaurant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fbd3e9, #bb377d);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #ff3e6c;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .auth-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .cart-display {
+      background-color: white;
+      color: #ff3e6c;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .menu-item {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 250px;
+      margin: 15px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .item-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .item-price {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .cart-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-controls button {
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #ff3e6c;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .quantity {
+      font-size: 18px;
+      min-width: 20px;
+      display: inline-block;
+    }
+
+    .place-order {
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .place-order button {
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .about {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .about a {
+      color: #ffa;
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+
+    .modal-content button {
+      padding: 10px 20px;
+      background-color: #ff3e6c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .close-btn {
+      float: right;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1><em>Urban Crave&nbsp; &nbsp; &nbsp; &nbsp;#Flavourthathitsdifferent</em></h1>
+    <div class="top-right">
+      <div class="cart-display" id="cartDisplay">Cart: 0 items | Rs 0</div>
+      <div class="auth-links">
+        <a onclick="openModal('signupModal')">Sign Up</a> |
+        <a onclick="openModal('loginModal')">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu">
+    
+    
+    <div class="menu-item" data-price="1800">
+      <img src="classic-cheese-pizza-recipe-2-64429a0cb408b.avif" alt="Pizza">
+      <div class="item-name">Pizza</div>
+      <div class="item-price">Rs 1,800</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+
+    
+    
+    <div class="menu-item" data-price="700">
+      <img src="istockphoto-175204982-612x612.jpg" alt="Submarine">
+      <div class="item-name">Submarine</div>
+      <div class="item-price">Rs 700</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+	  
+	
+    <div class="menu-item" data-price="1000">
+      <img src="pasta.avif" alt="Pasta">
+      <div class="item-name">Creamy Cheese Pasta</div>
+      <div class="item-price">Rs 1,000</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+	  
+	
+    <div class="menu-item" data-price="800">
+      <img src="kottu.avif" alt="Kottu">
+      <div class="item-name">Chicken Kottu</div>
+      <div class="item-price">Rs 800</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+
+    
+    <div class="menu-item" data-price="950">
+      <img src="vegetable-fried-rice-recipe-001.webp" alt="Fried Rice">
+      <div class="item-name">Fried Rice</div>
+      <div class="item-price">Rs 950</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+
+    
+    <div class="menu-item" data-price="1100">
+      <img src="Overhead-plate-Nasi-Goreng-Indonesian-Fried-Rice.jpg" alt="Nasi Goreng">
+      <div class="item-name">Mix Nasi Goreng</div>
+      <div class="item-price">Rs 1,100</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+
+
+    
+    <div class="menu-item" data-price="850">
+      <img src="burger.jpg" alt="Burger">
+      <div class="item-name">Chicken & Beef Burger</div>
+      <div class="item-price">Rs 850</div>
+      <div class="cart-controls">
+        <button onclick="decrease(this)">−</button>
+        <span class="quantity">0</span>
+        <button onclick="increase(this)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="place-order" id="orderSection">
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
+
+  <div class="about" id="aboutus">
+     <a href="About Us Page.HTML">About Us</a>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div class="modal" id="signupModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('signupModal')">✖</span>
+      <h2>Sign Up</h2>
+      <input type="text" id="signupName" placeholder="Name">
+      <input type="text" id="signupAddress" placeholder="Address">
+      <input type="number" id="signupPhone" placeholder="Phone Number">
+	  <input type="email" id="signupEmail" placeholder="email">
+      <input type="password" id="signupPassword" placeholder="Create Password">
+      <button onclick="signUp()">Register</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('loginModal')">✖</span>
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="email">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button onclick="login()">Login</button>
+    </div>
+  </div>
+
+<script>
+    let totalItems = 0;
+    let totalPrice = 0;
+    let isSignedUp = false;
+
+    function updateCartDisplay() {
+      document.getElementById("cartDisplay").textContent =
+        `Cart: ${totalItems} items | Rs ${totalPrice}`;
+      document.getElementById("orderSection").style.display = totalItems > 0 ? "block" : "none";
+    }
+
+    function increase(button) {
+      const quantitySpan = button.parentElement.querySelector('.quantity');
+      let count = parseInt(quantitySpan.textContent);
+      count++;
+      quantitySpan.textContent = count;
+
+      const item = button.closest('.menu-item');
+      const price = parseInt(item.getAttribute('data-price'));
+
+      totalItems++;
+      totalPrice += price;
+
+      updateCartDisplay();
+    }
+
+    function decrease(button) {
+      const quantitySpan = button.parentElement.querySelector('.quantity');
+      let count = parseInt(quantitySpan.textContent);
+      if (count > 0) {
+        count--;
+        quantitySpan.textContent = count;
+
+        const item = button.closest('.menu-item');
+        const price = parseInt(item.getAttribute('data-price'));
+
+        totalItems--;
+        totalPrice -= price;
+
+        updateCartDisplay();
+      }
+    }
+
+    function placeOrder() {
+      if (!isSignedUp) {
+        alert("⚠️ Please sign up to place an order.");
+        return;
+      }
+
+      if (totalItems === 0) {
+        alert("🛒 Your cart is empty!");
+        return;
+      }
+
+      alert(`✅ Order Placed Successfully!\n\nTotal Items: ${totalItems}\nTotal Price: Rs ${totalPrice}\n\n🧑‍🍳 Restaurant staff has received your order.`);
+      totalItems = 0;
+      totalPrice = 0;
+      document.querySelectorAll('.quantity').forEach(span => span.textContent = "0");
+      updateCartDisplay();
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function signUp() {
+      const name = document.getElementById("signupName").value;
+      const address = document.getElementById("signupAddress").value;
+      const phone = document.getElementById("signupPhone").value;
+      const email = document.getElementById("signupEmail").value;
+	  const password = document.getElementById("signupPassword").value;
+	  
+
+      if (!name || !address || !phone || !password || !email ) {
+        alert("❗ Please fill in all fields.");
+        return;
+      }
+
+      isSignedUp = true;
+      alert("🎉 Registration successful! You can now place an order.");
+      closeModal('signupModal');
+    }
+
+    function login() {
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      if (!email || !password) {
+        alert("❗ Please enter both email and password.");
+        return;
+      }
+
+      alert("🔐 Login successful!");
+      closeModal('loginModal');
+    }
+  </script>
+
+</body>
+</html>
+
+
